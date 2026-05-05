@@ -13,7 +13,7 @@ export default function Filters({ onFilter }) {
     const handleChange = (key, value) => {
         const updated = { ...filters, [key]: value };
         setFilters(updated);
-        onFilter(updated); // send to parent
+        onFilter(updated);
     };
 
     const clearFilters = () => {
@@ -28,7 +28,6 @@ export default function Filters({ onFilter }) {
         onFilter(empty);
     };
 
-    // 🔥 Debounce logic
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedSearch(filters.search);
@@ -44,7 +43,6 @@ export default function Filters({ onFilter }) {
     return (
         <div className="bg-white p-4 rounded shadow flex gap-3 flex-wrap">
 
-            {/* Search */}
             <input
                 type="text"
                 placeholder="Search tasks..."
@@ -53,7 +51,6 @@ export default function Filters({ onFilter }) {
                 onChange={(e) => handleChange("search", e.target.value)}
             />
 
-            {/* Project */}
             <select
                 className="border p-2 rounded"
                 value={filters.project}
@@ -65,7 +62,6 @@ export default function Filters({ onFilter }) {
                 <option value="Food App">Food App</option>
             </select>
 
-            {/* Assignee */}
             <select
                 className="border p-2 rounded"
                 value={filters.assignee}
@@ -77,7 +73,6 @@ export default function Filters({ onFilter }) {
                 <option value="Bob Johnson">Bob Johnson</option>
             </select>
 
-            {/* Status */}
             <select
                 className="border p-2 rounded"
                 value={filters.status}
@@ -88,7 +83,6 @@ export default function Filters({ onFilter }) {
                 <option value="Done">Done</option>
             </select>
 
-            {/* Type */}
             <select
                 className="border p-2 rounded"
                 value={filters.type}

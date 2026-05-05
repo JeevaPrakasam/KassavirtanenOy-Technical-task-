@@ -4,7 +4,8 @@ import { fetchTasks, deleteTask } from "../redux/actions";
 
 export default function TaskList({ filters, onEdit }) {
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks);
+
+  const { tasks, loading } = useSelector((state) => state);
 
   const [filteredTasks, setFilteredTasks] = useState([]);
 
@@ -15,7 +16,6 @@ export default function TaskList({ filters, onEdit }) {
   useEffect(() => {
     let result = [...tasks];
 
-    // 🔍 Search filter
     if (filters?.search) {
       result = result.filter(
         (task) =>
@@ -24,21 +24,18 @@ export default function TaskList({ filters, onEdit }) {
       );
     }
 
-    // 📁 Project filter
     if (filters?.project) {
       result = result.filter(
         (task) => task.project === filters.project
       );
     }
 
-    // 👤 Assignee filter
     if (filters?.assignee) {
       result = result.filter(
         (task) => task.assignee === filters.assignee
       );
     }
 
-    // 📌 Status filter
     if (filters?.status) {
       result = result.filter(
         (task) =>
@@ -48,7 +45,6 @@ export default function TaskList({ filters, onEdit }) {
       );
     }
 
-    // 🐞 Type filter
     if (filters?.type) {
       result = result.filter(
         (task) => task.taskType === filters.type
@@ -57,6 +53,23 @@ export default function TaskList({ filters, onEdit }) {
 
     setFilteredTasks(result);
   }, [tasks, filters]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center mt-10">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (filteredTasks.length === 0) {
+    return (
+      <div className="text-center mt-10 text-gray-500">
+        <h3 className="text-lg font-semibold">No tasks found</h3>
+        <p>Create your first task to get started!</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-6">
@@ -68,14 +81,15 @@ export default function TaskList({ filters, onEdit }) {
         {filteredTasks.map((task) => (
           <div
             key={task.id}
-            className={`bg-white rounded-lg shadow p-4 border-l-4 ${task.taskType === "Bug" ? "border-red-500" : "border-green-500"
+            className={`bg-white rounded-lg shadow p-4 border-l-4 ${task.taskType === "Bug"
+              ? "border-red-500"
+              : "border-green-500"
               }`}
           >
-            {/* Top Row */}
+
             <div className="flex justify-between items-center">
               <div className="flex gap-2 items-center">
 
-                {/* Type Badge */}
                 <span
                   className={`text-xs px-2 py-1 rounded text-white ${task.taskType === "Bug"
                     ? "bg-red-500"
@@ -85,15 +99,14 @@ export default function TaskList({ filters, onEdit }) {
                   {task.taskType || "Bug"}
                 </span>
 
-                {/* Status */}
                 <span className="text-blue-500 text-sm font-medium">
                   {task.status || "In Progress"}
                 </span>
               </div>
 
-              {/* Icons */}
               <div className="flex gap-2 cursor-pointer">
                 <span onClick={() => onEdit(task)}>✏️</span>
+
                 <span
                   onClick={() => {
                     if (window.confirm("Are you sure you want to delete this task?")) {
@@ -106,17 +119,14 @@ export default function TaskList({ filters, onEdit }) {
               </div>
             </div>
 
-            {/* Title */}
             <h3 className="font-bold text-lg mt-2">
               {task.title}
             </h3>
 
-            {/* Description */}
             <p className="text-gray-600 text-sm mt-1">
               {task.description}
             </p>
 
-            {/* Severity */}
             <p className="text-sm mt-2">
               Severity:{" "}
               <span className="text-orange-500 font-medium">
@@ -124,15 +134,12 @@ export default function TaskList({ filters, onEdit }) {
               </span>
             </p>
 
-            {/* Subtasks */}
             <p className="text-sm">
               Subtasks: {task.subtasks?.length || 0}
             </p>
 
-            {/* Divider */}
             <div className="border-t my-3"></div>
 
-            {/* Bottom Row */}
             <div className="flex justify-between text-sm">
               <span>
                 Assigned to: {task.assignee || "User"}

@@ -3,22 +3,33 @@ import {
   FETCH_TASKS_SUCCESS,
   DELETE_TASK,
   EDIT_TASK,
+  FETCH_TASKS,
 } from "./actions";
 
-const initialState = { tasks: [] };
+const initialState = {
+  tasks: [],
+  loading: false,
+};
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_TASK_SUCCESS:
+    case FETCH_TASKS:
       return {
         ...state,
-        tasks: [...state.tasks, action.payload],
+        loading: true,
       };
 
     case FETCH_TASKS_SUCCESS:
       return {
         ...state,
         tasks: action.payload,
+        loading: false,
+      };
+
+    case ADD_TASK_SUCCESS:
+      return {
+        ...state,
+        tasks: [...state.tasks, action.payload],
       };
 
     case DELETE_TASK:

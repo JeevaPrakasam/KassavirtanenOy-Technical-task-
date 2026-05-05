@@ -47,7 +47,6 @@ export default function TaskForm({ onClose, editData, setEditData }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-      {/* Title */}
       <div>
         <label className={labelStyle}>Title *</label>
         <input
@@ -62,7 +61,6 @@ export default function TaskForm({ onClose, editData, setEditData }) {
         )}
       </div>
 
-      {/* Task Type */}
       <div>
         <label className={labelStyle}>Task Type *</label>
         <select className={inputStyle} {...register("taskType")}>
@@ -71,7 +69,6 @@ export default function TaskForm({ onClose, editData, setEditData }) {
         </select>
       </div>
 
-      {/* Priority */}
       <div>
         <label className={labelStyle}>Priority *</label>
         <select className={inputStyle} {...register("priority")}>
@@ -81,7 +78,6 @@ export default function TaskForm({ onClose, editData, setEditData }) {
         </select>
       </div>
 
-      {/* Project */}
       <div>
         <label className={labelStyle}>Project</label>
         <select className={inputStyle} {...register("project")}>
@@ -91,7 +87,6 @@ export default function TaskForm({ onClose, editData, setEditData }) {
         </select>
       </div>
 
-      {/* Assignee */}
       <div>
         <label className={labelStyle}>Assignee</label>
         <select className={inputStyle} {...register("assignee")}>
@@ -101,7 +96,6 @@ export default function TaskForm({ onClose, editData, setEditData }) {
         </select>
       </div>
 
-      {/* Description */}
       <div>
         <label className={labelStyle}>Description</label>
         <textarea
@@ -111,13 +105,11 @@ export default function TaskForm({ onClose, editData, setEditData }) {
         />
       </div>
 
-      {/* Due Date */}
       <div>
         <label className={labelStyle}>Due Date</label>
         <input type="date" className={inputStyle} {...register("dueDate")} />
       </div>
 
-      {/* Severity */}
       <div>
         <label className={labelStyle}>Severity</label>
         <select className={inputStyle} {...register("severity")}>
@@ -127,7 +119,6 @@ export default function TaskForm({ onClose, editData, setEditData }) {
         </select>
       </div>
 
-      {/* Steps */}
       <div>
         <label className={labelStyle}>Steps to Reproduce</label>
         <textarea
@@ -137,7 +128,6 @@ export default function TaskForm({ onClose, editData, setEditData }) {
         />
       </div>
 
-      {/* Subtasks */}
       <div>
         <label className={labelStyle}>Subtasks</label>
 
