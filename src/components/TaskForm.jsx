@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addTask, editTask } from "../redux/actions";
 
 export default function TaskForm({ onClose, editData, setEditData }) {
-  const { register, handleSubmit, control, reset } = useForm({
+  const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
     defaultValues: {
       subtasks: [{ title: "" }],
     },
@@ -50,7 +50,16 @@ export default function TaskForm({ onClose, editData, setEditData }) {
       {/* Title */}
       <div>
         <label className={labelStyle}>Title *</label>
-        <input className={inputStyle} {...register("title")} />
+        <input
+          className={`w-full p-2 rounded mt-1 text-sm ${errors.title ? "border border-red-500" : "bg-gray-800 text-white"
+            }`}
+          {...register("title", { required: "Title is required" })}
+        />
+        {errors.title && (
+          <p className="text-red-500 text-xs mt-1">
+            {errors.title.message}
+          </p>
+        )}
       </div>
 
       {/* Task Type */}
